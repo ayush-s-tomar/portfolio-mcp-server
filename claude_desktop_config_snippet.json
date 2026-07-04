@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "portfolio": {
+      "command": "python",
+      "args": ["/absolute/path/to/portfolio-mcp-server/server.py"]
+    }
+  }
+}
