@@ -1,4 +1,4 @@
-﻿"""
+"""
 Smoke/unit tests for the portfolio MCP server's tools.
 
 These call the underlying tool functions directly (FastMCP's @mcp.tool()
@@ -6,7 +6,7 @@ decorator doesn't wrap them, so they're plain callables) rather than going
 through the MCP protocol layer -- fast, no transport needed.
 """
 
-from server import (
+from portfolio_mcp_server.server import (
     PROJECTS,
     get_flagship_project,
     get_project_details,
