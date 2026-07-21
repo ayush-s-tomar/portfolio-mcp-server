@@ -164,3 +164,7 @@ Released under the [MIT License](LICENSE).
 **Ayush Tomar** — [GitHub](https://github.com/ayush-s-tomar)
 
 If this was useful as a reference for building your own MCP server, a ⭐ on the repo is appreciated.
+
+
+mcp-name: io.github.ayush-s-tomar/portfolio-mcp-server
+

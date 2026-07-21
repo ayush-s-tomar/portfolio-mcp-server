@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.ayush-s-tomar/portfolio-mcp-server",
+  "description": "MCP server exposing Ayush Tomar's AI portfolio -- ask what he built or his flagship project.",
+  "repository": {
+    "url": "https://github.com/ayush-s-tomar/portfolio-mcp-server",
+    "source": "github"
+  },
+  "version": "1.0.1",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "portfolio-mcp-server",
+      "version": "1.0.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
+
