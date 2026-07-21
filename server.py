@@ -1,4 +1,4 @@
-"""
+﻿"""
 Portfolio MCP Server
 ---------------------
 Exposes Ayush Tomar's project portfolio as MCP tools so any MCP-compatible
@@ -16,11 +16,11 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("portfolio-server")
 
 # ---------------------------------------------------------------------------
-# Data — edit this to keep it current. Later you can swap this for a JSON
+# Data â€” edit this to keep it current. Later you can swap this for a JSON
 # file or a small DB without changing any tool signatures below.
 # ---------------------------------------------------------------------------
 
-PROJECTS = [
+PROJECTS: list[dict] = [
     {
         "name": "SalesAgent",
         "description": (
@@ -175,7 +175,7 @@ PROFILE = {
 def list_projects() -> list[dict]:
     """List all projects in Ayush's portfolio with a short summary of each.
 
-    Returns a compact list (name, one-line description, stack) — use
+    Returns a compact list (name, one-line description, stack) â€” use
     get_project_details for the full description, GitHub link, and demo URL.
     """
     return [
@@ -226,7 +226,7 @@ def search_projects_by_stack(technology: str) -> list[dict]:
 
 @mcp.tool()
 def get_flagship_project() -> dict:
-    """Get Ayush's flagship/best project — the one to look at first for a
+    """Get Ayush's flagship/best project â€” the one to look at first for a
     quick sense of his skill level."""
     for p in PROJECTS:
         if p.get("flagship"):
