@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Portfolio MCP Server
 
@@ -10,14 +10,18 @@ Point any MCP client (Claude Desktop, Cursor, custom agents) at it and ask
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![PyPI](https://img.shields.io/pypi/v/portfolio-mcp-server?color=blue)](https://pypi.org/project/portfolio-mcp-server/)
 [![MCP](https://img.shields.io/badge/protocol-MCP-5A67D8.svg)](https://modelcontextprotocol.io)
 [![CI](https://github.com/ayush-s-tomar/portfolio-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/ayush-s-tomar/portfolio-mcp-server/actions/workflows/ci.yml)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-261230.svg)](https://github.com/astral-sh/ruff)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-<img src="assets/MCP.gif" alt="Portfolio MCP Server demo" width="720">
+**TL;DR**
+- 📦 **Published, not just built** — live on PyPI and the official MCP registry; `pip install portfolio-mcp-server` gets it running in any MCP client in under a minute, no repo clone required.
+- 🔧 **5 real tools** — list, detail-lookup, stack search, flagship pick, and resume summary, all backed by structured data instead of a static README scroll.
+- ✅ **CI-tested on every push** — lint, type-check, and a real stdio smoke test that calls all 5 tools and validates the JSON schema of each response.
 
-[Watch the full walkthrough ▶](https://github.com/user-attachments/assets/4c1b844a-087f-48a6-b156-bdef27282acc)
+<img src="assets/MCP.gif" alt="Portfolio MCP Server demo" width="720">
 
 </div>
 
@@ -50,7 +54,15 @@ answer to *"show me you've actually built with MCP,"* not just talked about it.
 |---|---|
 | ![MCP Inspector Demo](assets/MCP_Inspector_Demo.png) | ![MCP Chat Demo](assets/MCP_Chat_Demo.png) |
 
-Full video walkthrough (setup → tool calls → live answers): **[watch here ▶](https://github.com/user-attachments/assets/4c1b844a-087f-48a6-b156-bdef27282acc)**
+<details>
+<summary><b>🎥 Full video walkthrough</b></summary>
+<br/>
+
+https://github.com/user-attachments/assets/4c1b844a-087f-48a6-b156-bdef27282acc
+
+*Setup → tool calls → live answers, end to end.*
+
+</details>
 
 ## Tools exposed
 
@@ -63,6 +75,14 @@ Full video walkthrough (setup → tool calls → live answers): **[watch here �
 | `get_resume_summary` | Background, target role, and core stack |
 
 ## Quickstart
+
+**Option A — install from PyPI (fastest):**
+
+```bash
+pip install portfolio-mcp-server
+```
+
+**Option B — clone and run from source (for local edits/testing):**
 
 ```bash
 git clone https://github.com/ayush-s-tomar/portfolio-mcp-server.git
@@ -94,7 +114,21 @@ Open your Claude Desktop config file:
 
 If the file already has an `mcpServers` key with other servers in it, add
 the `"portfolio"` entry inside the existing object rather than overwriting
-the file. Use the **absolute path** to `server.py` on your machine:
+the file.
+
+**If you installed via PyPI (Option A above):**
+
+```json
+{
+  "mcpServers": {
+    "portfolio": {
+      "command": "portfolio-mcp-server"
+    }
+  }
+}
+```
+
+**If you're running from a cloned source checkout (Option B above):** use the **absolute path** to `server.py` on your machine:
 
 ```json
 {
@@ -118,6 +152,7 @@ Claude will call `search_projects_by_stack` and answer from the live data.
 - **Python 3.10+**
 - **[MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)** (`FastMCP`)
 - **stdio transport**
+- **Packaged for PyPI** and registered on the official [MCP server registry](https://modelcontextprotocol.io) (`io.github.ayush-s-tomar/portfolio-mcp-server`)
 
 ## Testing & CI
 
@@ -139,6 +174,7 @@ pytest
 ```
 
 ## Project structure
+```
 portfolio-mcp-server/
 ├── server.py # FastMCP server + tool definitions
 ├── data/
@@ -147,12 +183,17 @@ portfolio-mcp-server/
 │ └── test_tools.py # Smoke tests for each tool
 ├── requirements.txt
 ├── requirements-dev.txt
+├── pyproject.toml # PyPI packaging config
+├── server.json # MCP registry manifest
 └── .github/workflows/ci.yml
+```
+
 ## Roadmap
 
+- [x] Publish to PyPI as an installable package
+- [x] Publish to the official MCP server registry
 - [ ] `search_projects_by_stack` — support matching on multiple technologies at once
 - [ ] Add an HTTP/SSE transport option alongside stdio for remote clients
-- [ ] Publish to the MCP server registry
 - [ ] Cache resume/project data with a lightweight refresh endpoint instead of static JSON
 
 ## License
@@ -167,4 +208,3 @@ If this was useful as a reference for building your own MCP server, a ⭐ on the
 
 
 mcp-name: io.github.ayush-s-tomar/portfolio-mcp-server
-
