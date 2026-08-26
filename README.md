@@ -174,7 +174,6 @@ pytest
 ```
 
 ## Project structure
-```
 portfolio-mcp-server/
 ├── server.py # FastMCP server + tool definitions
 ├── data/
@@ -186,7 +185,6 @@ portfolio-mcp-server/
 ├── pyproject.toml # PyPI packaging config
 ├── server.json # MCP registry manifest
 └── .github/workflows/ci.yml
-```
 
 ## Roadmap
 
