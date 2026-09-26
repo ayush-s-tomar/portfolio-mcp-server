@@ -37,6 +37,7 @@ Point any MCP client (Claude Desktop, Cursor, custom agents) at it and ask
 - [Stack](#stack)
 - [Testing & CI](#testing--ci)
 - [Project structure](#project-structure)
+- [Known limitations](#known-limitations)
 - [Roadmap](#roadmap)
 - [License](#license)
 - [Author](#author)
@@ -174,17 +175,26 @@ pytest
 ```
 
 ## Project structure
+
+```text
 portfolio-mcp-server/
-├── server.py # FastMCP server + tool definitions
+├── server.py              # FastMCP server + tool definitions
 ├── data/
-│ └── projects.json # Project data the tools read from
+│   └── projects.json      # Project data the tools read from
 ├── tests/
-│ └── test_tools.py # Smoke tests for each tool
+│   └── test_tools.py      # Smoke tests for each tool
 ├── requirements.txt
 ├── requirements-dev.txt
-├── pyproject.toml # PyPI packaging config
-├── server.json # MCP registry manifest
+├── pyproject.toml         # PyPI packaging config
+├── server.json             # MCP registry manifest
 └── .github/workflows/ci.yml
+```
+
+## Known limitations
+
+- **Static project data** — tools read from `data/projects.json`, so adding or updating a project means editing that file and republishing, not a live sync with the actual GitHub repos or portfolio site (see [Roadmap](#roadmap) — a refresh endpoint isn't built yet).
+- **stdio transport only** — works great for local MCP clients like Claude Desktop that can spawn the process directly, but there's no HTTP/SSE option yet for a client that needs to reach it remotely over the network.
+- **`search_projects_by_stack` matches one technology at a time** — asking for projects using both LangGraph *and* FastAPI together isn't supported yet; each call filters on a single technology.
 
 ## Roadmap
 
@@ -200,7 +210,7 @@ Released under the [MIT License](LICENSE).
 
 ## Author
 
-**Ayush Tomar** — [GitHub](https://github.com/ayush-s-tomar)
+**Ayush Singh Tomar** — [GitHub](https://github.com/ayush-s-tomar) · [LinkedIn](https://www.linkedin.com/in/ayushsinghtomar) · [Portfolio](https://ayush-s-tomar.vercel.app)
 
 If this was useful as a reference for building your own MCP server, a ⭐ on the repo is appreciated.
 
