@@ -1,3 +1,13 @@
+<!-- TODO (data refresh): the published wheel (v1.0.1, uploaded 2026-07-21) bundles PROJECTS inside
+server.py with 10 projects, not data/projects.json with 9 as described in this README. It is missing the
+LoRA resume screener, Self-Healing RAG, Agentic RAG, LLM Cost Router, AI Interview Coach, North Star and
+this MCP server. Its flagship is SalesAgent while the GitHub profile says AskMyDocs. Its demo links for
+AI Data Analyst (Vercel), JobHunt, Email Agent, StartupScope and ResumeIQ differ from the links in those
+repos' READMEs. To fix: reconcile the repo with the published layout, update the data, run
+`node scripts/check-links.mjs path/to/data` from the portfolio site repo, bump the version in
+pyproject.toml and server.json, publish 1.0.2 to PyPI, update the registry entry. Also confirm
+CONTRIBUTING.md exists (the PRs Welcome badge links to it). -->
+
 <div align="center">
 
 # Portfolio MCP Server
@@ -6,7 +16,7 @@
 
 Point any MCP client (Claude Desktop, Cursor, custom agents) at it and ask
 *"What has Ayush built with LangGraph?"* or *"What's his flagship project?"*
-— it answers from live structured data, not a static PDF.
+— it answers from structured data, not a static PDF.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
@@ -69,7 +79,7 @@ https://github.com/user-attachments/assets/4c1b844a-087f-48a6-b156-bdef27282acc
 
 | Tool | Description |
 |---|---|
-| `list_projects` | Short summary of all 9 projects |
+| `list_projects` | Short summary of every project in the bundled dataset |
 | `get_project_details(project_name)` | Full details for one project |
 | `search_projects_by_stack(technology)` | Find projects using a given technology |
 | `get_flagship_project` | The single best project to look at first |
@@ -146,7 +156,7 @@ Restart Claude Desktop, then ask it something like:
 
 > "What projects has Ayush built with FastAPI?"
 
-Claude will call `search_projects_by_stack` and answer from the live data.
+Claude will call `search_projects_by_stack` and answer from the bundled project data.
 
 ## Stack
 
@@ -192,12 +202,17 @@ portfolio-mcp-server/
 
 ## Known limitations
 
+- **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.1, published 2026-07-21, at the time of writing). Projects added and demo links changed since then don't appear until a new version is published, and tool responses can't yet say how current they are.
 - **Static project data** — tools read from `data/projects.json`, so adding or updating a project means editing that file and republishing, not a live sync with the actual GitHub repos or portfolio site (see [Roadmap](#roadmap) — a refresh endpoint isn't built yet).
 - **stdio transport only** — works great for local MCP clients like Claude Desktop that can spawn the process directly, but there's no HTTP/SSE option yet for a client that needs to reach it remotely over the network.
 - **`search_projects_by_stack` matches one technology at a time** — asking for projects using both LangGraph *and* FastAPI together isn't supported yet; each call filters on a single technology.
 
 ## Roadmap
 
+- [ ] Publish a refreshed release with the current project list and verified demo links
+- [ ] Fetch project data from the portfolio site at startup, with the bundled snapshot as an offline fallback — one source of truth instead of two copies that drift apart, and it makes "live data" literally true
+- [ ] Return a `last_updated` date from every tool so an answer can say how current it is
+- [ ] Link-check every demo URL in the dataset in CI
 - [x] Publish to PyPI as an installable package
 - [x] Publish to the official MCP server registry
 - [ ] `search_projects_by_stack` — support matching on multiple technologies at once
