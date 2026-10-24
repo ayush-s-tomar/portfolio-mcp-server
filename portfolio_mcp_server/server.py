@@ -1,14 +1,14 @@
 """
 Portfolio MCP Server
 ---------------------
-Exposes Ayush Tomar's project portfolio as MCP tools so any MCP-compatible
-client (Claude Desktop, etc.) can query it interactively.
+Exposes Ayush Singh Tomar's project portfolio as MCP tools so any
+MCP-compatible client (Claude Desktop, Claude Code, Cursor, etc.) can query it.
 
-Run locally with the inspector:
+Run locally with the inspector (from the repo root):
     mcp dev server.py
 
-Run standalone (stdio transport, used by Claude Desktop):
-    python server.py
+Run standalone (stdio transport, used by MCP clients):
+    portfolio-mcp-server
 """
 
 from mcp.server.fastmcp import FastMCP
@@ -16,122 +16,246 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("portfolio-server")
 
 # ---------------------------------------------------------------------------
-# Data — edit this to keep it current. Later you can swap this for a JSON
-# file or a small DB without changing any tool signatures below.
+# Data: edit this to keep it current, then bump the version and republish.
 # ---------------------------------------------------------------------------
 
 PROJECTS: list[dict] = [
     {
+        "name": "AskMyDocs",
+        "description": (
+            "RAG chatbot that answers questions over uploaded PDFs with "
+            "source citations and similarity scores. Hybrid search (RRF), "
+            "section-aware chunking, and conversation memory. Eval "
+            "benchmark: 80% pass rate, average score 6.2/10."
+        ),
+        "stack": ["Next.js", "Supabase", "pgvector", "Cohere"],
+        "github": "https://github.com/ayush-s-tomar/intellect-docs-ai",
+        "demo": "https://intellect-docs-ai.vercel.app/",
+        "writeup": None,
+        "flagship": True,
+    },
+    {
         "name": "SalesAgent",
         "description": (
-            "Autonomous B2B sales agent. Paste a LinkedIn URL, it researches "
-            "the lead, scores them with ML (84/100), and drafts a hyper-"
-            "personalized cold email referencing real company events, in "
-            "under 45 seconds."
+            "Autonomous B2B sales agent. Paste a LinkedIn URL and it "
+            "researches the lead, scores them with a Random Forest model "
+            "(trained on synthetic data), and drafts a personalized cold "
+            "email referencing real company events. Saves leads to a CRM "
+            "pipeline with SQLite memory."
         ),
-        "stack": ["LangGraph", "FastAPI", "React", "scikit-learn", "Groq", "Tavily"],
+        "stack": [
+            "LangGraph", "FastAPI", "React", "scikit-learn", "Groq",
+            "Tavily", "SQLite",
+        ],
         "github": "https://github.com/ayush-s-tomar/salesagent",
-        "demo": "https://salesagent-ai.streamlit.app/",
+        "demo": "https://salesagent-theta.vercel.app/",
         "writeup": "https://dev.to/ayushsinghtomar/i-got-tired-of-writing-cold-emails-so-i-built-an-ai-agent-to-do-it-for-me-2m4h",
-        "flagship": True,
+        "flagship": False,
     },
     {
         "name": "AgentLoop",
         "description": (
-            "A multi-step research agent that breaks a question into "
-            "sub-questions, searches the live web, reflects on gaps, loops "
-            "back, and delivers a fully cited report."
+            "Multi-step research agent built as a LangGraph pipeline "
+            "(Recall, Plan, Research, Reflect, Synthesize, Persist). Breaks "
+            "a question into sub-questions, searches the live web, reflects "
+            "on gaps, loops back, and delivers a cited report. SQLite "
+            "long-term memory and rate limiting."
         ),
-        "stack": ["FastAPI", "LangGraph", "Groq", "Tavily"],
+        "stack": ["LangGraph", "Groq", "Tavily", "SQLite"],
         "github": "https://github.com/ayush-s-tomar/agentloop",
         "demo": "https://agentloop.onrender.com/",
         "writeup": None,
         "flagship": False,
     },
     {
-        "name": "AskMyDocs",
+        "name": "LoRA Resume Screener",
         "description": (
-            "RAG pipeline that answers questions over 50-page PDFs in under "
-            "3 seconds, with source citations and cosine similarity scores. "
-            "No SQL, no code."
+            "LoRA fine-tune of Qwen2.5-0.5B-Instruct that returns "
+            "structured JSON resume verdicts. On 96 held-out examples, "
+            "verdict accuracy rose from 17.7% (zero-shot) to 88.5%, and "
+            "mean score error fell from 32.03 to 5.39. Adapter is on "
+            "Hugging Face. The hosted demo uses a Groq-backed model because "
+            "Render's free tier cannot run the adapter; local inference "
+            "runs the trained adapter."
         ),
-        "stack": ["Next.js", "Supabase", "pgvector", "Cohere"],
-        "github": "https://github.com/ayush-s-tomar/intellect-docs-ai",
-        "demo": "https://intellect-docs-ai.vercel.app/",
+        "stack": [
+            "LoRA", "Qwen2.5", "Hugging Face", "Transformers", "Groq",
+        ],
+        "github": "https://github.com/ayush-s-tomar/resume-screener-lora",
+        "demo": "https://resume-screener-finetune.onrender.com/",
         "writeup": None,
         "flagship": False,
     },
     {
-        "name": "AI Data Analyst Agent",
+        "name": "Portfolio MCP Server",
         "description": (
-            "Upload any CSV, ask questions in plain English, get instant "
-            "charts and insights. No SQL. No code."
+            "This server. A FastMCP server that exposes the portfolio as 5 "
+            "MCP tools. Published on PyPI and the official MCP registry, "
+            "with CI (ruff, mypy, pytest, and a stdio smoke test)."
         ),
-        "stack": ["FastAPI", "React", "Groq", "pandas", "matplotlib"],
-        "github": "https://github.com/ayush-s-tomar/ai-data-analyst",
-        "demo": "https://ai-data-analyst-six-sooty.vercel.app/",
-        "writeup": None,
-        "flagship": False,
-    },
-    {
-        "name": "JobHunt",
-        "description": (
-            "Multi-user Telegram job aggregator. AI scores every post and "
-            "auto-applies via email or form-fill. Watches job channels 24/7."
-        ),
-        "stack": ["FastAPI", "PostgreSQL", "Groq", "Playwright"],
-        "github": "https://github.com/ayush-s-tomar/jobhunt",
-        "demo": "https://jobhunt-demo.vercel.app/",
-        "writeup": None,
-        "flagship": False,
-    },
-    {
-        "name": "Email Agent",
-        "description": (
-            "AI agent that reads Gmail, classifies emails, drafts context-"
-            "aware replies, and lets you approve or edit before sending."
-        ),
-        "stack": ["FastAPI", "React", "LLaMA 3.3"],
-        "github": "https://github.com/ayush-s-tomar/Email-agent",
-        "demo": "https://ai-inbox-agent.streamlit.app/",
-        "writeup": None,
-        "flagship": False,
-    },
-    {
-        "name": "ARIA - Voice AI Assistant",
-        "description": (
-            "Speech-to-speech AI assistant with 99-language support and "
-            "conversation memory. Speak in any language, ARIA transcribes, "
-            "thinks, and talks back."
-        ),
-        "stack": ["FastAPI", "Faster-Whisper", "Groq", "LLaMA", "gTTS"],
-        "github": "https://github.com/ayush-s-tomar/aria-voice-assistant",
-        "demo": "https://aria-bot.streamlit.app/",
+        "stack": ["Python", "FastMCP", "MCP"],
+        "github": "https://github.com/ayush-s-tomar/portfolio-mcp-server",
+        "demo": "https://pypi.org/project/portfolio-mcp-server/",
         "writeup": None,
         "flagship": False,
     },
     {
         "name": "StartupScope",
         "description": (
-            "Multi-agent CrewAI crew: Researcher, Analyst, and Writer agents "
-            "collaborate to search the web and generate structured startup "
-            "intelligence reports."
+            "Multi-agent CrewAI crew (Researcher, Analyst, Writer) that "
+            "searches the web and generates structured company intelligence "
+            "reports, with PDF export and a parallel compare mode."
         ),
-        "stack": ["CrewAI", "Groq", "SerperDev"],
+        "stack": ["CrewAI", "Groq", "Serper", "Streamlit"],
         "github": "https://github.com/ayush-s-tomar/startupscope",
-        "demo": "https://startupscope-ephq.onrender.com/",
+        "demo": "https://startupscope-ai.streamlit.app/",
         "writeup": None,
         "flagship": False,
     },
     {
-        "name": "n8n Email to Slack",
+        "name": "Agentic RAG Research Assistant",
         "description": (
-            "No-code AI automation pipeline: fetches unread Gmail, "
-            "summarizes with Groq LLaMA, detects priority, pushes digest to "
-            "Slack."
+            "LangGraph ReAct agent with Qdrant retrieval and cost-aware "
+            "routing between a fast model and a stronger model on Groq. It "
+            "refuses to answer when retrieved chunks do not cover the "
+            "question. RAGAS eval harness included (eval set is still "
+            "placeholder data)."
         ),
-        "stack": ["n8n", "Groq", "Gmail", "Slack"],
-        "github": "https://github.com/ayush-s-tomar/n8n-email-slack",
+        "stack": ["LangGraph", "Qdrant", "Groq", "Streamlit", "FastAPI"],
+        "github": "https://github.com/ayush-s-tomar/agentic-rag-assistant",
+        "demo": "https://agentic-rag-groq.streamlit.app/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "Self-Healing RAG",
+        "description": (
+            "RAG pipeline with a LangGraph critique-and-reformulate loop: "
+            "when retrieved context is weak, the graph critiques it, "
+            "rewrites the query, and retries."
+        ),
+        "stack": ["LangGraph", "Groq", "Chroma", "FastAPI", "Streamlit"],
+        "github": "https://github.com/ayush-s-tomar/self-healing-rag",
+        "demo": None,
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "LLM Cost Router",
+        "description": (
+            "Streamlit app that routes each query to a cheap or expensive "
+            "Groq model using a keyword and length heuristic (no extra LLM "
+            "call), with a live dashboard comparing spend against an "
+            "always-expensive baseline."
+        ),
+        "stack": ["Streamlit", "Groq", "Python"],
+        "github": "https://github.com/ayush-s-tomar/llm-cost-router",
+        "demo": "https://llm-cost-router.streamlit.app/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "AgentOps",
+        "description": (
+            "LLM observability and eval dashboard. Traces latency, tokens, "
+            "and cost per step with a @traced decorator, stores run history "
+            "in Supabase Postgres, and flags eval regressions. Currently "
+            "instruments AgentLoop; the cost formula is approximate."
+        ),
+        "stack": ["Streamlit", "Supabase", "PostgreSQL", "Python"],
+        "github": "https://github.com/ayush-s-tomar/agentops-dashboard",
+        "demo": "https://agentops-dashboard.streamlit.app/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "AI Interview Coach",
+        "description": (
+            "Voice-based mock interview simulator. Transcribes spoken "
+            "answers, scores them on relevance, clarity, technical "
+            "accuracy, and confidence for SDE, AI Engineer, and Data "
+            "Analyst roles, and exports a PDF report. No audio is stored."
+        ),
+        "stack": [
+            "Streamlit", "Faster-Whisper", "Groq", "gTTS", "ReportLab",
+        ],
+        "github": "https://github.com/ayush-s-tomar/ai-interview-coach",
+        "demo": "https://mockinterview-ai.streamlit.app/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "ARIA - Voice AI Assistant",
+        "description": (
+            "Speech-to-speech assistant (v3.0.0) with Groq Whisper "
+            "large-v3 speech-to-text, a Groq-hosted LLM, gTTS or ElevenLabs "
+            "voice, Redis memory, WebSocket streaming, tool use with web "
+            "search, and GitHub OAuth."
+        ),
+        "stack": [
+            "FastAPI", "Groq", "Whisper", "gTTS", "ElevenLabs", "Redis",
+            "WebSocket",
+        ],
+        "github": "https://github.com/ayush-s-tomar/aria-voice-assistant",
+        "demo": "https://ayush-s-tomar.github.io/aria-voice-assistant/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "JobHunt",
+        "description": (
+            "Telegram job aggregator. AI scores every post and can "
+            "auto-apply via email or form-fill, with Telegram "
+            "notifications and a daily digest. The live demo is a "
+            "single-user Streamlit rebuild."
+        ),
+        "stack": [
+            "FastAPI", "PostgreSQL", "Supabase", "Groq", "Playwright",
+            "Telegram",
+        ],
+        "github": "https://github.com/ayush-s-tomar/jobhunt",
+        "demo": "https://jobhunt-ai.streamlit.app/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "AI Data Analyst Agent",
+        "description": (
+            "Upload a CSV, Excel, JSON, Parquet, or other tabular file, ask "
+            "questions in plain English, and get analysis plus generated "
+            "pandas and matplotlib charts. Session memory keeps follow-up "
+            "questions in context."
+        ),
+        "stack": ["Streamlit", "Groq", "pandas", "matplotlib"],
+        "github": "https://github.com/ayush-s-tomar/ai-data-analyst",
+        "demo": None,
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "Email Agent",
+        "description": (
+            "AI email agent that reads Gmail, classifies messages, drafts "
+            "context-aware replies, and lets you approve or edit before "
+            "sending. Multi-account Gmail, Slack alerts, and FTS5 "
+            "full-text search."
+        ),
+        "stack": ["FastAPI", "React", "SQLite", "Groq"],
+        "github": "https://github.com/ayush-s-tomar/Email-agent",
+        "demo": "https://ai-inbox-agent.streamlit.app/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "North Star",
+        "description": (
+            "Customer support chatbot for outdoor gear shoppers (persona: "
+            "Stella) with 5 intent-routed flows: order tracking, returns, "
+            "product recommendations, human handoff, and fallback. Runs "
+            "locally; order data is mocked."
+        ),
+        "stack": ["FastAPI", "React", "Groq"],
+        "github": "https://github.com/ayush-s-tomar/northstar-chatbot",
         "demo": None,
         "writeup": None,
         "flagship": False,
@@ -142,30 +266,44 @@ PROJECTS: list[dict] = [
             "AI resume screener that scores ATS compatibility, identifies "
             "gaps, and exports detailed PDF reports."
         ),
-        "stack": ["Python", "Flask", "Groq"],
+        "stack": ["Python", "Flask", "Groq", "pdfplumber", "Docker"],
         "github": "https://github.com/ayush-s-tomar/ResumeIQ",
         "demo": "https://resumeiq-55h8.onrender.com/",
+        "writeup": None,
+        "flagship": False,
+    },
+    {
+        "name": "n8n Email to Slack",
+        "description": (
+            "No-code AI automation: fetches unread Gmail, filters noise "
+            "(OTPs, spam, resets), summarizes with Groq, detects priority, "
+            "and posts a digest to Slack."
+        ),
+        "stack": ["n8n", "Groq", "Gmail", "Slack"],
+        "github": "https://github.com/ayush-s-tomar/n8n-email-slack",
+        "demo": None,
         "writeup": None,
         "flagship": False,
     },
 ]
 
 PROFILE = {
-    "name": "Ayush Tomar",
-    "role_target": "AI Developer (early-stage startups)",
+    "name": "Ayush Singh Tomar",
+    "role_target": "AI Engineer / GenAI Developer (full-time and freelance)",
     "education": "B.Tech IT, MITS Gwalior (2023-2027, final year)",
     "core_stack": [
-        "Python", "LangChain", "LangGraph", "CrewAI", "FastAPI", "Groq",
-        "Supabase pgvector", "Tavily", "React", "Render", "Vercel",
+        "Python", "FastAPI", "LangGraph", "CrewAI", "LangChain", "Groq",
+        "Qdrant", "Supabase pgvector", "Tavily", "React", "Next.js",
+        "Streamlit", "Render", "Vercel",
     ],
     "github": "https://github.com/ayush-s-tomar",
     "highlights": [
-        "9 independently built and deployed AI projects, no prior internship",
-        "Built and shipped an MCP server (this one) to expose the portfolio itself",
-        "Active LinkedIn cold-outreach campaign targeting Indian AI startups",
+        "9+ AI projects built and deployed solo: agents, RAG, voice, fine-tuning",
+        "LoRA fine-tune of Qwen2.5-0.5B: resume verdict accuracy 17.7% to 88.5% on 96 held-out examples",
+        "Published this MCP server on PyPI and the official MCP registry to expose the portfolio itself",
+        "Freelance AI developer: multi-agent systems, RAG pipelines, LangGraph, FastAPI backends",
     ],
 }
-
 
 # ---------------------------------------------------------------------------
 # Tools
