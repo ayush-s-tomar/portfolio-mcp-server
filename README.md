@@ -1,13 +1,3 @@
-<!-- TODO (data refresh): the published wheel (v1.0.1, uploaded 2026-07-21) bundles PROJECTS inside
-server.py with 10 projects, not data/projects.json with 9 as described in this README. It is missing the
-LoRA resume screener, Self-Healing RAG, Agentic RAG, LLM Cost Router, AI Interview Coach, North Star and
-this MCP server. Its flagship is SalesAgent while the GitHub profile says AskMyDocs. Its demo links for
-AI Data Analyst (Vercel), JobHunt, Email Agent, StartupScope and ResumeIQ differ from the links in those
-repos' READMEs. To fix: reconcile the repo with the published layout, update the data, run
-`node scripts/check-links.mjs path/to/data` from the portfolio site repo, bump the version in
-pyproject.toml and server.json, publish 1.0.2 to PyPI, update the registry entry. Also confirm
-CONTRIBUTING.md exists (the PRs Welcome badge links to it). -->
-
 <div align="center">
 
 # 🗂️ Portfolio MCP Server
@@ -23,9 +13,9 @@ Connect it to Claude, Cursor, or any MCP client and just ask.
 [![CI](https://github.com/ayush-s-tomar/portfolio-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/ayush-s-tomar/portfolio-mcp-server/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![MCP](https://img.shields.io/badge/protocol-MCP-5A67D8.svg)](https://modelcontextprotocol.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ayush-s-tomar/portfolio-mcp-server/blob/main/LICENSE)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-261230.svg)](https://github.com/astral-sh/ruff)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ayush-s-tomar/portfolio-mcp-server/blob/main/CONTRIBUTING.md)
 
 **[Quickstart](#-quickstart)** ·
 **[Tools](#-tools)** ·
@@ -36,7 +26,7 @@ Connect it to Claude, Cursor, or any MCP client and just ask.
 
 <br/>
 
-<img src="assets/MCP.gif" alt="Portfolio MCP Server demo" width="720">
+<img src="https://raw.githubusercontent.com/ayush-s-tomar/portfolio-mcp-server/main/assets/MCP.gif" alt="Portfolio MCP Server demo" width="720">
 
 </div>
 
@@ -84,10 +74,8 @@ Most AI-developer portfolios are a list of links. This is a working MCP server b
 
 ## 🧠 How it works
 
-```mermaid
-flowchart LR
-    A["MCP client<br/>(Claude, Cursor, agents)"] <-->|stdio| B["portfolio-mcp-server<br/>(FastMCP)"]
-    B --> C[("Bundled project data")]
+```text
+MCP client (Claude, Cursor, agents)  <--stdio-->  portfolio-mcp-server (FastMCP)  -->  bundled project data
 ```
 
 The client launches the server as a local process and talks to it over stdio. The server answers each tool call from its bundled project data. Nothing is hosted, and no API keys are needed.
@@ -96,7 +84,7 @@ The client launches the server as a local process and talks to it over stdio. Th
 
 | MCP Inspector: tool discovery | Live chat demo |
 |---|---|
-| ![MCP Inspector Demo](assets/MCP_Inspector_Demo.png) | ![MCP Chat Demo](assets/MCP_Chat_Demo.png) |
+| ![MCP Inspector Demo](https://raw.githubusercontent.com/ayush-s-tomar/portfolio-mcp-server/main/assets/MCP_Inspector_Demo.png) | ![MCP Chat Demo](https://raw.githubusercontent.com/ayush-s-tomar/portfolio-mcp-server/main/assets/MCP_Chat_Demo.png) |
 
 <details>
 <summary><b>🎥 Full video walkthrough</b></summary>
@@ -217,7 +205,7 @@ mypy server.py
 pytest
 ```
 
-See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+See [`.github/workflows/ci.yml`](https://github.com/ayush-s-tomar/portfolio-mcp-server/blob/main/.github/workflows/ci.yml).
 
 </details>
 
@@ -253,8 +241,7 @@ portfolio-mcp-server/
 
 ## ⚠️ Known limitations
 
-> [!WARNING]
-> **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.1, published 2026-07-21, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
+> **Warning:** **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.2, published 2026-10-24, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
 
 - **Static project data.** Tools read from bundled data, so updating a project means editing it and republishing. There is no live sync with the GitHub repos or portfolio site yet.
 - **stdio only.** It works for local clients that can spawn the process, such as Claude Desktop, but there is no HTTP/SSE option yet for remote clients.
@@ -268,10 +255,10 @@ portfolio-mcp-server/
 
 - [x] Publish to PyPI as an installable package
 - [x] Publish to the official MCP server registry
+- [x] Refresh the bundled project data (v1.0.2)
 
 **Next**
 
-- [ ] Publish a refreshed release with the current project list and verified demo links
 - [ ] Fetch project data from the portfolio site at startup, with the bundled snapshot as an offline fallback (one source of truth instead of two copies that drift apart)
 - [ ] Return a `last_updated` date from every tool so an answer can say how current it is
 - [ ] Link-check every demo URL in the dataset in CI
@@ -286,7 +273,7 @@ portfolio-mcp-server/
 
 ## 📄 License
 
-Released under the [MIT License](LICENSE).
+Released under the [MIT License](https://github.com/ayush-s-tomar/portfolio-mcp-server/blob/main/LICENSE).
 
 ---
 

@@ -122,7 +122,7 @@ PROJECTS: list[dict] = [
             "placeholder data)."
         ),
         "stack": ["LangGraph", "Qdrant", "Groq", "Streamlit", "FastAPI"],
-        "github": "https://github.com/ayush-s-tomar/agentic-rag-assistant",
+        "github": "https://github.com/ayush-s-tomar/agentic-rag-research-assistant",
         "demo": "https://agentic-rag-groq.streamlit.app/",
         "writeup": None,
         "flagship": False,
@@ -163,7 +163,7 @@ PROJECTS: list[dict] = [
             "instruments AgentLoop; the cost formula is approximate."
         ),
         "stack": ["Streamlit", "Supabase", "PostgreSQL", "Python"],
-        "github": "https://github.com/ayush-s-tomar/agentops-dashboard",
+        "github": "https://github.com/ayush-s-tomar/agentops",
         "demo": "https://agentops-dashboard.streamlit.app/",
         "writeup": None,
         "flagship": False,
