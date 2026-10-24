@@ -31,8 +31,8 @@ Connect it to Claude, Cursor, or any MCP client and just ask.
 **[Tools](#-tools)** ·
 **[Demo](#-demo)** ·
 **[Connect a client](#-connect-a-client)** ·
-**[Limitations](#-known-limitations)** ·
-**[Roadmap](#-roadmap)**
+**[Limitations](#known-limitations)** ·
+**[Roadmap](#roadmap)**
 
 <br/>
 
@@ -243,6 +243,8 @@ portfolio-mcp-server/
 
 **Built with:** Python 3.10+ · [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) (`FastMCP`) · stdio transport · registered on the [MCP registry](https://modelcontextprotocol.io) as `io.github.ayush-s-tomar/portfolio-mcp-server`
 
+<a id="known-limitations"></a>
+
 ## ⚠️ Known limitations
 
 > [!WARNING]
@@ -251,6 +253,8 @@ portfolio-mcp-server/
 - **Static project data.** Tools read from bundled data, so updating a project means editing it and republishing. There is no live sync with the GitHub repos or portfolio site yet.
 - **stdio only.** It works for local clients that can spawn the process, such as Claude Desktop, but there is no HTTP/SSE option yet for remote clients.
 - **One technology per search.** `search_projects_by_stack` filters on a single technology per call, so "LangGraph *and* FastAPI together" isn't supported yet.
+
+<a id="roadmap"></a>
 
 ## 🗺️ Roadmap
 
