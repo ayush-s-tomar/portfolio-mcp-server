@@ -227,16 +227,22 @@ See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ```text
 portfolio-mcp-server/
-├── server.py              # FastMCP server + tool definitions
-├── data/
-│   └── projects.json      # Project data the tools read from
-├── tests/
-│   └── test_tools.py      # Smoke tests for each tool
-├── requirements.txt
-├── requirements-dev.txt
-├── pyproject.toml         # PyPI packaging config
-├── server.json            # MCP registry manifest
-└── .github/workflows/ci.yml
+|-- portfolio_mcp_server/
+|   |-- __init__.py
+|   `-- server.py          # packaged module (what PyPI ships)
+|-- server.py              # top-level entry point (dev / MCP Inspector / CI)
+|-- tests/
+|   |-- smoke_test.py      # stdio smoke test: calls all 5 tools, validates JSON schema
+|   `-- test_tools.py      # per-tool tests
+|-- assets/                # demo GIF and screenshots
+|-- .github/workflows/ci.yml
+|-- pyproject.toml         # PyPI packaging config
+|-- server.json            # MCP registry manifest
+|-- requirements.txt
+|-- requirements-dev.txt
+|-- claude_desktop_config_snippet.json
+|-- CONTRIBUTING.md
+`-- LICENSE
 ```
 
 </details>
