@@ -34,16 +34,16 @@ Connect it to Claude, Cursor, or any MCP client and just ask.
 
 ## ⚡ Quickstart
 
-Run it with zero setup:
+The server command (clients launch it for you; run by hand, it just waits silently for a client):
 
 ```bash
-uvx --with 'mcp<2' portfolio-mcp-server
+uvx --with "mcp<2" portfolio-mcp-server
 ```
 
-Or add it straight to Claude Code:
+Add it to Claude Code with one line:
 
 ```bash
-claude mcp add --scope user portfolio -- uvx --with 'mcp<2' portfolio-mcp-server
+claude mcp add --scope user portfolio -- uvx --with "mcp<2" portfolio-mcp-server
 ```
 
 Then ask:
@@ -103,7 +103,7 @@ https://github.com/user-attachments/assets/4c1b844a-087f-48a6-b156-bdef27282acc
 <br/>
 
 ```bash
-claude mcp add --scope user portfolio -- uvx --with 'mcp<2' portfolio-mcp-server
+claude mcp add --scope user portfolio -- uvx --with "mcp<2" portfolio-mcp-server
 ```
 
 </details>
@@ -241,7 +241,7 @@ portfolio-mcp-server/
 
 ## ⚠️ Known limitations
 
-> **Warning:** **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.2, published 2026-10-24, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
+> **Warning:** **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.3, published 2026-10-25, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
 
 - **Static project data.** Tools read from bundled data, so updating a project means editing it and republishing. There is no live sync with the GitHub repos or portfolio site yet.
 - **stdio only.** It works for local clients that can spawn the process, such as Claude Desktop, but there is no HTTP/SSE option yet for remote clients.

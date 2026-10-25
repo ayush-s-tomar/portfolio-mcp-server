@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3 - 2026-10-25
+
+### Changed
+- Added the AI Data Analyst demo link
+- Shortened the MCP registry description
+- README: clearer quickstart, and commands use double quotes so they work in PowerShell, cmd, and bash
+
 ## 1.0.2 - 2026-10-24
 
 ### Changed

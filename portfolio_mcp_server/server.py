@@ -228,7 +228,7 @@ PROJECTS: list[dict] = [
         ),
         "stack": ["Streamlit", "Groq", "pandas", "matplotlib"],
         "github": "https://github.com/ayush-s-tomar/ai-data-analyst",
-        "demo": None,
+        "demo": "https://askthedata-ai.streamlit.app/",
         "writeup": None,
         "flagship": False,
     },
