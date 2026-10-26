@@ -256,12 +256,12 @@ portfolio-mcp-server/
 - [x] Publish to PyPI as an installable package
 - [x] Publish to the official MCP server registry
 - [x] Refresh the bundled project data (v1.0.2)
+- [x] Weekly CI link check of every URL in the bundled data
 
 **Next**
 
 - [ ] Fetch project data from the portfolio site at startup, with the bundled snapshot as an offline fallback (one source of truth instead of two copies that drift apart)
 - [ ] Return a `last_updated` date from every tool so an answer can say how current it is
-- [ ] Link-check every demo URL in the dataset in CI
 - [ ] Support matching multiple technologies at once in `search_projects_by_stack`
 - [ ] Add an HTTP/SSE transport option alongside stdio for remote clients
 
