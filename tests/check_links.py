@@ -2,8 +2,12 @@
 
 Run from the repo root:  python -m tests.check_links
 Exits 1 if any link fails. Used by the weekly GitHub Actions link check.
+
+Streamlit Community Cloud answers app URLs with a 303 redirect that sets a
+cookie, so every request keeps cookies and follows redirects.
 """
 
+import http.cookiejar
 import sys
 import time
 import urllib.error
@@ -13,13 +17,15 @@ from portfolio_mcp_server.server import PROJECTS
 
 
 def check(url: str) -> str:
-    req = urllib.request.Request(
-        url, headers={"User-Agent": "portfolio-mcp-server-link-check"}
-    )
     last = "error"
     for _ in range(3):
+        jar = http.cookiejar.CookieJar()
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+        req = urllib.request.Request(
+            url, headers={"User-Agent": "portfolio-mcp-server-link-check"}
+        )
         try:
-            with urllib.request.urlopen(req, timeout=60) as resp:
+            with opener.open(req, timeout=60) as resp:
                 return "ok" if resp.status == 200 else f"HTTP {resp.status}"
         except urllib.error.HTTPError as exc:
             last = f"HTTP {exc.code}"
