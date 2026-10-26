@@ -7,6 +7,7 @@ Streamlit Community Cloud answers app URLs with a 303 redirect that sets a
 cookie, so every request keeps cookies and follows redirects.
 """
 
+import http.client
 import http.cookiejar
 import sys
 import time
@@ -31,7 +32,7 @@ def check(url: str) -> str:
             last = f"HTTP {exc.code}"
             if exc.code in (404, 410):
                 break
-        except Exception as exc:
+        except (OSError, http.client.HTTPException) as exc:
             last = type(exc).__name__
         time.sleep(5)
     return last
