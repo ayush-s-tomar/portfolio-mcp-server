@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4 - 2026-10-27
+
+### Changed
+- PyPI page: collapsed README sections now render as normal headings (applied at build time)
+- README: project structure lists the new tests, workflows, and policy files
 ## 1.0.3 - 2026-10-25
 
 ### Changed

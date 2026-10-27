@@ -221,15 +221,23 @@ portfolio-mcp-server/
 |-- server.py              # top-level entry point (dev / MCP Inspector / CI)
 |-- tests/
 |   |-- smoke_test.py      # stdio smoke test: calls all 5 tools, validates JSON schema
-|   `-- test_tools.py      # per-tool tests
+|   |-- test_tools.py      # per-tool tests
+|   |-- test_data.py       # data integrity checks for the bundled projects
+|   `-- check_links.py     # checks every URL in the data (runs weekly in CI)
 |-- assets/                # demo GIF and screenshots
-|-- .github/workflows/ci.yml
+|-- .github/
+|   |-- workflows/         # ci.yml, links.yml
+|   |-- ISSUE_TEMPLATE/
+|   |-- PULL_REQUEST_TEMPLATE.md
+|   `-- dependabot.yml
 |-- pyproject.toml         # PyPI packaging config
 |-- server.json            # MCP registry manifest
 |-- requirements.txt
 |-- requirements-dev.txt
 |-- claude_desktop_config_snippet.json
+|-- CHANGELOG.md
 |-- CONTRIBUTING.md
+|-- SECURITY.md
 `-- LICENSE
 ```
 
@@ -241,7 +249,7 @@ portfolio-mcp-server/
 
 ## ⚠️ Known limitations
 
-> **Warning:** **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.3, published 2026-10-25, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
+> **Warning:** **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.4, published 2026-10-27, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
 
 - **Static project data.** Tools read from bundled data, so updating a project means editing it and republishing. There is no live sync with the GitHub repos or portfolio site yet.
 - **stdio only.** It works for local clients that can spawn the process, such as Claude Desktop, but there is no HTTP/SSE option yet for remote clients.
