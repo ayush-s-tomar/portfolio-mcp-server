@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "portfolio-mcp-server"
-version = "1.0.4"
+version = "1.1.0"
 description = "MCP server exposing Ayush Singh Tomar's AI project portfolio as queryable tools for Claude, Cursor, and other MCP clients"
 dynamic = ["readme"]
 requires-python = ">=3.10"
@@ -22,7 +22,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "mcp[cli]>=1.0.0,<2.0.0",
+    "mcp[cli]>=1.10.0,<2.0.0",
 ]
 
 [project.urls]

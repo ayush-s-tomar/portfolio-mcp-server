@@ -6,12 +6,12 @@
     "url": "https://github.com/ayush-s-tomar/portfolio-mcp-server",
     "source": "github"
   },
-  "version": "1.0.4",
+  "version": "1.1.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "portfolio-mcp-server",
-      "version": "1.0.4",
+      "version": "1.1.0",
       "transport": {
         "type": "stdio"
       }

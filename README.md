@@ -59,7 +59,7 @@ Most AI-developer portfolios are a list of links. This is a working MCP server b
 | | |
 |---|---|
 | 📦 **Published** | Live on PyPI and the official MCP registry |
-| 🔧 **5 tools** | List, detail lookup, stack search, flagship pick, resume summary |
+| 🔧 **7 tools** | List, detail lookup, stack search, flagship pick, resume summary, job-description match, data freshness |
 | ✅ **Tested** | Lint, type-check, and a stdio smoke test on every push |
 
 ## 🧰 Tools
@@ -72,13 +72,17 @@ Most AI-developer portfolios are a list of links. This is a working MCP server b
 | `get_flagship_project` | The best project to look at first | *"What should I look at first?"* |
 | `get_resume_summary` | Background, target role, core stack | *"Summarize his background."* |
 
+### Resources and prompts
+
+Besides tools, the server exposes MCP **resources** (`portfolio://projects`, `portfolio://projects/{name}`, `portfolio://profile`) and two **prompts**: `evaluate_fit` (assess the portfolio against a role or a pasted job description) and `portfolio_tour` (a short guided tour). Every tool is marked read-only, so clients can run them without asking each time.
+
 ## 🧠 How it works
 
 ```text
 MCP client (Claude, Cursor, agents)  <--stdio-->  portfolio-mcp-server (FastMCP)  -->  bundled project data
 ```
 
-The client launches the server as a local process and talks to it over stdio. The server answers each tool call from its bundled project data. Nothing is hosted, and no API keys are needed.
+The client launches the server as a local process and talks to it over stdio. The server answers each tool call from its project data: the copy bundled in the package, refreshed from this repository when online (see Known limitations). Nothing is hosted, and no API keys are needed.
 
 ## 🎬 Demo
 
@@ -253,7 +257,6 @@ portfolio-mcp-server/
 
 - **Static project data.** Tools read from bundled data, so updating a project means editing it and republishing. There is no live sync with the GitHub repos or portfolio site yet.
 - **stdio only.** It works for local clients that can spawn the process, such as Claude Desktop, but there is no HTTP/SSE option yet for remote clients.
-- **One technology per search.** `search_projects_by_stack` filters on a single technology per call, so "LangGraph *and* FastAPI together" isn't supported yet.
 
 <a id="roadmap"></a>
 
@@ -268,9 +271,6 @@ portfolio-mcp-server/
 
 **Next**
 
-- [ ] Fetch project data from the portfolio site at startup, with the bundled snapshot as an offline fallback (one source of truth instead of two copies that drift apart)
-- [ ] Return a `last_updated` date from every tool so an answer can say how current it is
-- [ ] Support matching multiple technologies at once in `search_projects_by_stack`
 - [ ] Add an HTTP/SSE transport option alongside stdio for remote clients
 
 ## 🌐 Also listed on
