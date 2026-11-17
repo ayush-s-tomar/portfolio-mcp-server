@@ -135,6 +135,8 @@ def test_search_understands_topics():
     assert {"AskMyDocs", "Self-Healing RAG", "Agentic RAG Research Assistant"} <= set(names)
     voice = [r["name"] for r in server.search_projects_by_stack("voice")]
     assert "ARIA - Voice AI Assistant" in voice
+    nlp = [r["name"] for r in server.search_projects_by_stack("nlp")]
+    assert "LoRA Resume Screener" in nlp
 
 
 def test_search_with_empty_query_explains_itself():
