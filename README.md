@@ -68,9 +68,11 @@ Most AI-developer portfolios are a list of links. This is a working MCP server b
 |---|---|---|
 | `list_projects` | Summary of every project in the dataset | *"List everything Ayush has built."* |
 | `get_project_details(project_name)` | Full details for one project | *"Tell me about his RAG chatbot."* |
-| `search_projects_by_stack(technology)` | Projects using a given technology | *"Which projects use FastAPI?"* |
+| `search_projects_by_stack(technology)` | Projects using one or more technologies or topics ("LangGraph and FastAPI", "RAG") | *"Which projects use FastAPI?"* |
 | `get_flagship_project` | The best project to look at first | *"What should I look at first?"* |
 | `get_resume_summary` | Background, target role, core stack | *"Summarize his background."* |
+| `match_job_description(job_description)` | Ranks the projects against a pasted job description (keyword overlap) | *"Which of his projects fit this job description?"* |
+| `get_data_info` | How current the data is and where it came from | *"How fresh is this data?"* |
 
 ### Resources and prompts
 
@@ -221,19 +223,20 @@ See [`.github/workflows/ci.yml`](https://github.com/ayush-s-tomar/portfolio-mcp-
 portfolio-mcp-server/
 |-- portfolio_mcp_server/
 |   |-- __init__.py
-|   `-- server.py          # packaged module (what PyPI ships)
-|-- server.py              # top-level entry point (dev / MCP Inspector / CI)
+|   |-- server.py          # tools, resources, prompts, data loading and validation
+|   `-- data/
+|       `-- projects.json  # the portfolio data (bundled, refreshed from GitHub)
+|-- server.py              # top-level entry point (dev / MCP Inspector)
 |-- tests/
-|   |-- smoke_test.py      # stdio smoke test: calls all 5 tools, validates JSON schema
+|   |-- conftest.py        # keeps tests offline
+|   |-- smoke_test.py      # stdio smoke test: calls all 7 tools
 |   |-- test_tools.py      # per-tool tests
-|   |-- test_data.py       # data integrity checks for the bundled projects
-|   `-- check_links.py     # checks every URL in the data (runs weekly in CI)
+|   |-- test_data.py       # data integrity checks
+|   |-- test_v110.py       # live refresh, validation, search, matching
+|   |-- test_v120.py       # annotations, resources, prompts
+|   `-- check_links.py     # checks every URL in the data (weekly in CI)
 |-- assets/                # demo GIF and screenshots
-|-- .github/
-|   |-- workflows/         # ci.yml, links.yml
-|   |-- ISSUE_TEMPLATE/
-|   |-- PULL_REQUEST_TEMPLATE.md
-|   `-- dependabot.yml
+|-- .github/               # CI and weekly link check, Dependabot, templates
 |-- pyproject.toml         # PyPI packaging config
 |-- server.json            # MCP registry manifest
 |-- requirements.txt
@@ -253,9 +256,9 @@ portfolio-mcp-server/
 
 ## ⚠️ Known limitations
 
-> **Warning:** **The installed package is a snapshot.** `pip install` gets the portfolio as it was at that release (v1.0.4, published 2026-10-27, at the time of writing). Projects added and demo links changed since then won't appear until a new version is published, and tool responses can't yet say how current they are.
+> **Note:** The server refreshes its data from this repository (one JSON file) the first time a tool is used, and falls back to the copy bundled with your installed version when offline. This makes one small request to raw.githubusercontent.com; set `PORTFOLIO_MCP_OFFLINE=1` to disable it. Call `get_data_info` to see which data you got and its date.
 
-- **Static project data.** Tools read from bundled data, so updating a project means editing it and republishing. There is no live sync with the GitHub repos or portfolio site yet.
+- **Keyword matching only.** `match_job_description` and the stack search rank by keyword overlap and a hand-written synonym map. They are a quick filter, not an assessment of fit.
 - **stdio only.** It works for local clients that can spawn the process, such as Claude Desktop, but there is no HTTP/SSE option yet for remote clients.
 
 <a id="roadmap"></a>
@@ -268,10 +271,15 @@ portfolio-mcp-server/
 - [x] Publish to the official MCP server registry
 - [x] Refresh the bundled project data (v1.0.2)
 - [x] Weekly CI link check of every URL in the bundled data
+- [x] Live data refresh with a bundled offline fallback
+- [x] Multi-technology search, topic synonyms, and job-description matching
+- [x] Data freshness tool (get_data_info)
+- [x] MCP resources and prompts, read-only tool annotations
 
 **Next**
 
-- [ ] Add an HTTP/SSE transport option alongside stdio for remote clients
+- [ ] Hosted streamable-HTTP endpoint for remote clients
+- [ ] Optional semantic matching alongside the keyword matcher
 
 ## 🌐 Also listed on
 
