@@ -235,6 +235,7 @@ SYNONYMS: dict[str, tuple[str, ...]] = {
     "agents": ("agent", "agents", "langgraph", "crewai"),
     "multi-agent": ("multi-agent", "crewai", "langgraph"),
     "llm": ("llm", "groq", "llama"),
+    "nlp": ("nlp", "transformers", "hugging face"),
     "fine-tuning": ("fine-tune", "fine-tuning", "finetune", "lora"),
     "fine-tune": ("fine-tune", "fine-tuning", "finetune", "lora"),
     "voice": ("voice", "speech", "whisper", "gtts", "elevenlabs"),
